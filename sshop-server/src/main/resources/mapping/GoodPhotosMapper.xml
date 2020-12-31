@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.wumbuk.dao.GoodPhotosMapper" >
+  <resultMap id="BaseResultMap" type="org.wumbuk.entity.GoodPhotos" >
+    <id column="imgid" property="imgid" jdbcType="INTEGER" />
+    <result column="img_more" property="imgMore" jdbcType="VARCHAR" />
+    <result column="goodid" property="goodid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    imgid, img_more, goodid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from good-photos
+    where imgid = #{imgid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from good-photos
+    where imgid = #{imgid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.wumbuk.entity.GoodPhotos" >
+    insert into good-photos (imgid, img_more, goodid
+      )
+    values (#{imgid,jdbcType=INTEGER}, #{imgMore,jdbcType=VARCHAR}, #{goodid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.wumbuk.entity.GoodPhotos" >
+    insert into good-photos
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="imgid != null" >
+        imgid,
+      </if>
+      <if test="imgMore != null" >
+        img_more,
+      </if>
+      <if test="goodid != null" >
+        goodid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="imgid != null" >
+        #{imgid,jdbcType=INTEGER},
+      </if>
+      <if test="imgMore != null" >
+        #{imgMore,jdbcType=VARCHAR},
+      </if>
+      <if test="goodid != null" >
+        #{goodid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.wumbuk.entity.GoodPhotos" >
+    update good-photos
+    <set >
+      <if test="imgMore != null" >
+        img_more = #{imgMore,jdbcType=VARCHAR},
+      </if>
+      <if test="goodid != null" >
+        goodid = #{goodid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where imgid = #{imgid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.wumbuk.entity.GoodPhotos" >
+    update good-photos
+    set img_more = #{imgMore,jdbcType=VARCHAR},
+      goodid = #{goodid,jdbcType=INTEGER}
+    where imgid = #{imgid,jdbcType=INTEGER}
+  </update>
+</mapper>

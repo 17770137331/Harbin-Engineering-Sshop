@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.wumbuk.dao.RecordMapper" >
+  <resultMap id="BaseResultMap" type="org.wumbuk.entity.Record" >
+    <result column="rid" property="rid" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="status2" property="status2" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="org.wumbuk.entity.Record" >
+    insert into record (rid, uid, status2
+      )
+    values (#{rid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{status2,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.wumbuk.entity.Record" >
+    insert into record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="status2 != null" >
+        status2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="status2 != null" >
+        #{status2,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

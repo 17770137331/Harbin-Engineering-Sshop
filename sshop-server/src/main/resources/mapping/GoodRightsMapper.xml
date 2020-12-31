@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.wumbuk.dao.GoodRightsMapper" >
+  <resultMap id="BaseResultMap" type="org.wumbuk.entity.GoodRights" >
+    <result column="goodid" property="goodid" jdbcType="INTEGER" />
+    <result column="rid" property="rid" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="org.wumbuk.entity.GoodRights" >
+    insert into good-rights (goodid, rid)
+    values (#{goodid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.wumbuk.entity.GoodRights" >
+    insert into good-rights
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodid != null" >
+        goodid,
+      </if>
+      <if test="rid != null" >
+        rid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodid != null" >
+        #{goodid,jdbcType=INTEGER},
+      </if>
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

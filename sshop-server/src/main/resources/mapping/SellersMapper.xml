@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.wumbuk.dao.SellersMapper" >
+  <resultMap id="BaseResultMap" type="org.wumbuk.entity.Sellers" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="school" property="school" jdbcType="CHAR" />
+    <result column="ispass" property="ispass" jdbcType="BIT" />
+    <result column="totalnumber" property="totalnumber" jdbcType="INTEGER" />
+    <result column="reliability" property="reliability" jdbcType="REAL" />
+    <result column="surprise" property="surprise" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <resultMap id="BaseResultMap2" type="org.wumbuk.entity.Sellers" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="school" property="school" jdbcType="CHAR" />
+    <result column="bio" property="bio" jdbcType="VARCHAR" />
+    <result column="ispass" property="ispass" jdbcType="BIT" />
+    <result column="totalnumber" property="totalnumber" jdbcType="INTEGER" />
+    <result column="reliability" property="reliability" jdbcType="REAL" />
+    <result column="surprise" property="surprise" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="REAL" />
+    <collection property="activities" ofType="org.wumbuk.entity.Activity">
+      <id column="aid" property="aid" jdbcType="INTEGER" />
+      <result column="title" property="title" jdbcType="CHAR" />
+      <result column="descripition" property="descripition" jdbcType="VARCHAR" />
+       <result column="type" property="type" jdbcType="INTEGER" />
+    </collection>
+
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    sid, school, ispass, totalnumber, reliability, surprise
+  </sql>
+  <sql id="Base_Column_List2" >
+    sellers.sid, school, ispass, totalnumber, reliability, surprise,nickname,phone,avatar,score,`activity`.*
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sellers
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sellers
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.wumbuk.entity.Sellers" >
+    insert into sellers (sid, school, ispass, 
+      totalnumber, reliability, surprise
+      )
+    values (#{sid,jdbcType=INTEGER}, #{school,jdbcType=CHAR}, #{ispass,jdbcType=BIT}, 
+      #{totalnumber,jdbcType=INTEGER}, #{reliability,jdbcType=REAL}, #{surprise,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.wumbuk.entity.Sellers" >
+    insert into sellers
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="ispass != null" >
+        ispass,
+      </if>
+      <if test="totalnumber != null" >
+        totalnumber,
+      </if>
+      <if test="reliability != null" >
+        reliability,
+      </if>
+      <if test="surprise != null" >
+        surprise,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=CHAR},
+      </if>
+      <if test="ispass != null" >
+        #{ispass,jdbcType=BIT},
+      </if>
+      <if test="totalnumber != null" >
+        #{totalnumber,jdbcType=INTEGER},
+      </if>
+      <if test="reliability != null" >
+        #{reliability,jdbcType=REAL},
+      </if>
+      <if test="surprise != null" >
+        #{surprise,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.wumbuk.entity.Sellers" >
+    update sellers
+    <set >
+      <if test="school != null" >
+        school = #{school,jdbcType=CHAR},
+      </if>
+      <if test="ispass != null" >
+        ispass = #{ispass,jdbcType=BIT},
+      </if>
+      <if test="totalnumber != null" >
+        totalnumber = #{totalnumber,jdbcType=INTEGER},
+      </if>
+      <if test="reliability != null" >
+        reliability = #{reliability,jdbcType=REAL},
+      </if>
+      <if test="surprise != null" >
+        surprise = #{surprise,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.wumbuk.entity.Sellers" >
+    update sellers
+    set school = #{school,jdbcType=CHAR},
+      ispass = #{ispass,jdbcType=BIT},
+      totalnumber = #{totalnumber,jdbcType=INTEGER},
+      reliability = #{reliability,jdbcType=REAL},
+      surprise = #{surprise,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="getSellerByGoodId" resultMap="BaseResultMap2" parameterType="java.lang.Integer" >
+SELECT
+ sid, school, bio,ispass, totalnumber, reliability, surprise,nickname,phone,avatar,score,activity.*
+ FROM
+  (SELECT
+    sellers.sid, school, ispass, totalnumber, reliability, surprise,nickname,phone,avatar,score,bio
+    FROM `user`, sellers
+    WHERE sid =
+    (SELECT sid FROM good WHERE goodid=#{goodid,jdbcType=INTEGER} )
+    AND sellers.sid=`user`.userid
+    ) AS temp1
+    LEFT JOIN activity
+    ON activity.`aid` IN(SELECT aid FROM `activity-sellers` WHERE  userid=
+    (SELECT sid FROM good WHERE goodid=#{goodid,jdbcType=INTEGER})) ;
+  </select>
+
+
+</mapper>

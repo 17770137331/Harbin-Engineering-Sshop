@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.wumbuk.dao.MessageMapper" >
+  <resultMap id="BaseResultMap" type="org.wumbuk.entity.Message11" >
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="DECIMAL" />
+    <result column="time" property="time" jdbcType="TIME" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="flag" property="flag" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="org.wumbuk.entity.Message11" >
+    insert into message (phone, code, time, 
+      id)
+    values (#{phone,jdbcType=VARCHAR}, #{code,jdbcType=DECIMAL}, #{time,jdbcType=TIME}, 
+      #{id,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.wumbuk.entity.Message11" >
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=DECIMAL},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIME},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

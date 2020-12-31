@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.wumbuk.dao.OrderMapper">
+    <resultMap id="BaseResultMap" type="org.wumbuk.entity.Order">
+        <id column="orderid" property="orderid" jdbcType="INTEGER"/>
+        <result column="userbuyid" property="userbuyid" jdbcType="INTEGER"/>
+        <result column="usersellid" property="usersellid" jdbcType="INTEGER"/>
+        <result column="goodid" property="goodid" jdbcType="INTEGER"/>
+        <result column="number" property="number" jdbcType="INTEGER"/>
+        <result column="singleprice" property="singleprice" jdbcType="REAL"/>
+        <result column="totalprice" property="totalprice" jdbcType="REAL"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="comments" property="comments" jdbcType="VARCHAR"/>
+        <result column="ordertime" property="ordertime" jdbcType="DATE"/>
+    </resultMap>
+
+
+    <resultMap id="BaseResultMap2" type="org.wumbuk.entity.Order">
+        <id column="orderid" property="orderid" jdbcType="INTEGER"/>
+        <result column="singleprice" property="singleprice" jdbcType="REAL"/>
+        <result column="number" property="number" jdbcType="INTEGER"/>
+        <result column="totalprice" property="totalprice" jdbcType="REAL"/>
+        <result column="nickname" property="sellertitle" jdbcType="VARCHAR"/>
+        <result column="imglink" property="imglink" jdbcType="VARCHAR"/>
+        <result column="title" property="goodtitle" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+    orderid, userbuyid, usersellid, goodid, number, singleprice, totalprice, status, 
+    comments, ordertime
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from `order`
+        where orderid = #{orderid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order
+    where orderid = #{orderid,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="org.wumbuk.entity.Order">
+    insert into `order` (orderid, userbuyid, usersellid,
+      goodid, number, singleprice, 
+      totalprice, status, comments, 
+      ordertime)
+    values (#{orderid,jdbcType=INTEGER}, #{userbuyid,jdbcType=INTEGER}, #{usersellid,jdbcType=INTEGER}, 
+      #{goodid,jdbcType=INTEGER}, #{number,jdbcType=INTEGER}, #{singleprice,jdbcType=REAL}, 
+      #{totalprice,jdbcType=REAL}, #{status,jdbcType=INTEGER}, #{comments,jdbcType=VARCHAR}, 
+      #{ordertime,jdbcType=DATE})
+  </insert>
+    <insert id="insertSelective" parameterType="org.wumbuk.entity.Order">
+        insert into `order`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderid != null">
+                orderid,
+            </if>
+            <if test="userbuyid != null">
+                userbuyid,
+            </if>
+            <if test="usersellid != null">
+                usersellid,
+            </if>
+            <if test="goodid != null">
+                goodid,
+            </if>
+            <if test="number != null">
+                number,
+            </if>
+            <if test="singleprice != null">
+                singleprice,
+            </if>
+            <if test="totalprice != null">
+                totalprice,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="comments != null">
+                comments,
+            </if>
+            <if test="ordertime != null">
+                ordertime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderid != null">
+                #{orderid,jdbcType=INTEGER},
+            </if>
+            <if test="userbuyid != null">
+                #{userbuyid,jdbcType=INTEGER},
+            </if>
+            <if test="usersellid != null">
+                #{usersellid,jdbcType=INTEGER},
+            </if>
+            <if test="goodid != null">
+                #{goodid,jdbcType=INTEGER},
+            </if>
+            <if test="number != null">
+                #{number,jdbcType=INTEGER},
+            </if>
+            <if test="singleprice != null">
+                #{singleprice,jdbcType=REAL},
+            </if>
+            <if test="totalprice != null">
+                #{totalprice,jdbcType=REAL},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="comments != null">
+                #{comments,jdbcType=VARCHAR},
+            </if>
+            <if test="ordertime != null">
+                #{ordertime,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.wumbuk.entity.Order">
+        update `order`
+        <set>
+            <if test="userbuyid != null">
+                userbuyid = #{userbuyid,jdbcType=INTEGER},
+            </if>
+            <if test="usersellid != null">
+                usersellid = #{usersellid,jdbcType=INTEGER},
+            </if>
+            <if test="goodid != null">
+                goodid = #{goodid,jdbcType=INTEGER},
+            </if>
+            <if test="number != null">
+                number = #{number,jdbcType=INTEGER},
+            </if>
+            <if test="singleprice != null">
+                singleprice = #{singleprice,jdbcType=REAL},
+            </if>
+            <if test="totalprice != null">
+                totalprice = #{totalprice,jdbcType=REAL},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="comments != null">
+                comments = #{comments,jdbcType=VARCHAR},
+            </if>
+            <if test="ordertime != null">
+                ordertime = #{ordertime,jdbcType=DATE},
+            </if>
+        </set>
+        where orderid = #{orderid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.wumbuk.entity.Order">
+    update order
+    set userbuyid = #{userbuyid,jdbcType=INTEGER},
+      usersellid = #{usersellid,jdbcType=INTEGER},
+      goodid = #{goodid,jdbcType=INTEGER},
+      number = #{number,jdbcType=INTEGER},
+      singleprice = #{singleprice,jdbcType=REAL},
+      totalprice = #{totalprice,jdbcType=REAL},
+      status = #{status,jdbcType=INTEGER},
+      comments = #{comments,jdbcType=VARCHAR},
+      ordertime = #{ordertime,jdbcType=DATE}
+    where orderid = #{orderid,jdbcType=INTEGER}
+  </update>
+
+    <select id="getOrdersAll" resultMap="BaseResultMap2" parameterType="java.lang.Integer">
+SELECT orderid,singleprice,`order`.number,totalprice,nickname,imglink,title,`order`.status
+FROM `good`,`order`,`user`
+WHERE `order`.usersellid=user.`userid`
+AND `order`.`goodid`=good.`goodid`
+AND `order`.userbuyid=#{userbuyid,jdbcType=INTEGER}
+ORDER BY orderid DESC
+  </select>
+
+    <select id="getOrdersDoing" resultMap="BaseResultMap2" parameterType="java.lang.Integer">
+SELECT orderid,singleprice,`order`.number,totalprice,nickname,imglink,title,`order`.status
+FROM `good`,`order`,`user`
+WHERE `order`.usersellid=user.`userid`
+AND `order`.`goodid`=good.`goodid`
+AND `order`.userbuyid=#{userbuyid,jdbcType=INTEGER}
+AND `order`.`status`=1
+ORDER BY orderid DESC
+  </select>
+
+
+    <select id="getOrdersUnrating" resultMap="BaseResultMap2" parameterType="java.lang.Integer">
+SELECT orderid,singleprice,`order`.number,totalprice,nickname,imglink,title,`order`.status
+FROM `good`,`order`,`user`
+WHERE `order`.usersellid=user.`userid`
+AND `order`.`goodid`=good.`goodid`
+AND `order`.userbuyid=#{userbuyid,jdbcType=INTEGER}
+AND `order`.`status`=2
+ORDER BY orderid DESC
+  </select>
+
+    <select id="getOrdersFinished" resultMap="BaseResultMap2" parameterType="java.lang.Integer">
+SELECT orderid,singleprice,`order`.number,totalprice,nickname,imglink,title,`order`.status
+FROM `good`,`order`,`user`
+WHERE `order`.usersellid=user.`userid`
+AND `order`.`goodid`=good.`goodid`
+AND `order`.userbuyid=#{userbuyid,jdbcType=INTEGER}
+AND `order`.`status`=3
+ORDER BY orderid DESC
+  </select>
+
+
+</mapper>

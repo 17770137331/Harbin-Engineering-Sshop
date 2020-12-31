@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.wumbuk.dao.RatingsMapper" >
+  <resultMap id="BaseResultMap" type="org.wumbuk.entity.Ratings" >
+    <id column="ratingid" property="ratingid" jdbcType="INTEGER" />
+    <result column="orderid" property="orderid" jdbcType="INTEGER" />
+    <result column="ratetime" property="ratetime" jdbcType="DATE" />
+    <result column="ratescore" property="ratescore" jdbcType="REAL" />
+    <result column="ratetype" property="ratetype" jdbcType="INTEGER" />
+    <result column="text" property="text" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <resultMap id="BaseResultMap2" type="org.wumbuk.entity.Ratings" >
+    <id column="ratingid" property="ratingid" jdbcType="INTEGER" />
+    <result column="orderid" property="orderid" jdbcType="INTEGER" />
+    <result column="ratetime" property="ratetime" jdbcType="DATE" />
+    <result column="ratescore" property="ratescore" jdbcType="REAL" />
+    <result column="ratetype" property="ratetype" jdbcType="INTEGER" />
+    <result column="text" property="text" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ratingid, orderid, ratetime, ratescore, ratetype, text
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ratings
+    where ratingid = #{ratingid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ratings
+    where ratingid = #{ratingid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.wumbuk.entity.Ratings" >
+    insert into ratings (ratingid, orderid, ratetime, 
+      ratescore, ratetype, text
+      )
+    values (#{ratingid,jdbcType=INTEGER}, #{orderid,jdbcType=INTEGER}, #{ratetime,jdbcType=DATE}, 
+      #{ratescore,jdbcType=REAL}, #{ratetype,jdbcType=INTEGER}, #{text,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.wumbuk.entity.Ratings" >
+    insert into ratings
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ratingid != null" >
+        ratingid,
+      </if>
+      <if test="orderid != null" >
+        orderid,
+      </if>
+      <if test="ratetime != null" >
+        ratetime,
+      </if>
+      <if test="ratescore != null" >
+        ratescore,
+      </if>
+      <if test="ratetype != null" >
+        ratetype,
+      </if>
+      <if test="text != null" >
+        text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ratingid != null" >
+        #{ratingid,jdbcType=INTEGER},
+      </if>
+      <if test="orderid != null" >
+        #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="ratetime != null" >
+        #{ratetime,jdbcType=DATE},
+      </if>
+      <if test="ratescore != null" >
+        #{ratescore,jdbcType=REAL},
+      </if>
+      <if test="ratetype != null" >
+        #{ratetype,jdbcType=INTEGER},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.wumbuk.entity.Ratings" >
+    update ratings
+    <set >
+      <if test="orderid != null" >
+        orderid = #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="ratetime != null" >
+        ratetime = #{ratetime,jdbcType=DATE},
+      </if>
+      <if test="ratescore != null" >
+        ratescore = #{ratescore,jdbcType=REAL},
+      </if>
+      <if test="ratetype != null" >
+        ratetype = #{ratetype,jdbcType=INTEGER},
+      </if>
+      <if test="text != null" >
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ratingid = #{ratingid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.wumbuk.entity.Ratings" >
+    update ratings
+    set orderid = #{orderid,jdbcType=INTEGER},
+      ratetime = #{ratetime,jdbcType=DATE},
+      ratescore = #{ratescore,jdbcType=REAL},
+      ratetype = #{ratetype,jdbcType=INTEGER},
+      text = #{text,jdbcType=VARCHAR}
+    where ratingid = #{ratingid,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectByGoodid" resultMap="BaseResultMap2" parameterType="java.lang.Integer" >
+SELECT `user`.`nickname`,`user`.`avatar`,ratings.*,title
+FROM
+(SELECT *
+FROM `order`
+WHERE usersellid=
+(SELECT sid FROM good
+WHERE goodid=#{goodid,jdbcType=INTEGER})
+AND `order`.goodid=#{goodid,jdbcType=INTEGER}
+) AS temp,`user`,ratings,good
+WHERE temp.userbuyid=`user`.`userid`
+AND temp.status=3
+AND temp.orderid=ratings.orderid
+AND temp.goodid=good.`goodid`
+  </select>
+
+</mapper>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.wumbuk.dao.User1Mapper" >
+  <resultMap id="BaseResultMap" type="org.wumbuk.entity.User1" >
+    <id column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="ispublic" property="ispublic" jdbcType="BIT" />
+    <result column="bio" property="bio" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="CHAR" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    phone, pwd, name, avatar, email, ispublic, bio, age, address, company, sex, id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where phone = #{phone,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where phone = #{phone,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.wumbuk.entity.User1" >
+    insert into user (phone, pwd, name, 
+      avatar, email, ispublic, 
+      bio, age, address, 
+      company, sex, id)
+    values (#{phone,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{ispublic,jdbcType=BIT}, 
+      #{bio,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, 
+      #{company,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{id,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.wumbuk.entity.User1" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="pwd != null" >
+        pwd,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="avatar != null" >
+        avatar,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="ispublic != null" >
+        ispublic,
+      </if>
+      <if test="bio != null" >
+        bio,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="ispublic != null" >
+        #{ispublic,jdbcType=BIT},
+      </if>
+      <if test="bio != null" >
+        #{bio,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.wumbuk.entity.User1" >
+    update user
+    <set >
+      <if test="pwd != null" >
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="ispublic != null" >
+        ispublic = #{ispublic,jdbcType=BIT},
+      </if>
+      <if test="bio != null" >
+        bio = #{bio,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
+    </set>
+    where phone = #{phone,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.wumbuk.entity.User1" >
+    update user
+    set pwd = #{pwd,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      ispublic = #{ispublic,jdbcType=BIT},
+      bio = #{bio,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=CHAR},
+      id = #{id,jdbcType=INTEGER}
+    where phone = #{phone,jdbcType=VARCHAR}
+  </update>
+</mapper>
